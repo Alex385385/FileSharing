@@ -4,6 +4,8 @@
 #include <string>
 #include <algorithm>
 
+#include "server.h"
+
 using namespace std;
 
 vector<unsigned char> readFile(const string& fileName) {
@@ -32,10 +34,12 @@ void pasteDemo(const string& name, const vector<unsigned char>& fileBytes) {
 }
 
 int main() {
-    string name = "hello.txt";
-    vector<unsigned char> fileBytes(readFile(name));
+    //string name = "hello.txt";
+    //vector<unsigned char> fileBytes(readFile(name));
+    //pasteDemo(name, fileBytes);
 
-    pasteDemo(name, fileBytes);
+    server newServer;
+    newServer.turnOn();
 
     cout << "Hello, World!" << endl;
     return 0;
