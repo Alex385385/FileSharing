@@ -5,6 +5,7 @@
 #ifndef FILESHARING_SERVER_H
 #define FILESHARING_SERVER_H
 
+#include <vector>
 
 class server {
 public:
@@ -12,7 +13,7 @@ public:
 
     virtual ~server();
 
-    void turnOn();
+    void turnOn(const std::vector<unsigned char> &fileBytes);
 
 };
 

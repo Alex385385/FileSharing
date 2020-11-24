@@ -9,6 +9,7 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <iostream>
+#include <vector>
 
 #include "server.h"
 
@@ -19,7 +20,7 @@
 server::server() = default;
 server::~server() = default;
 
-void server::turnOn() {
+void server::turnOn(const std::vector<unsigned char> &fileBytes) {
     int createdServer;
     int newSocket;
     long value;
@@ -64,7 +65,7 @@ void server::turnOn() {
         char buffer[30000] = {0};
         value = read(newSocket, buffer, 30000);
         printf("%s\n",buffer);
-        write(newSocket, hello, strlen(hello));
+        write(newSocket, fileBytes.data(), fileBytes.size());
         std::cout << "Message sent" << std::endl;
 
         close(newSocket);

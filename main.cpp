@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include "server.h"
+#include "client.h"
 
 using namespace std;
 
@@ -34,12 +35,14 @@ void pasteDemo(const string& name, const vector<unsigned char>& fileBytes) {
 }
 
 int main() {
-    //string name = "hello.txt";
-    //vector<unsigned char> fileBytes(readFile(name));
+    string name = "hello.txt";
+    vector<unsigned char> fileBytes(readFile(name));
     //pasteDemo(name, fileBytes);
+    //client newClient;
 
     server newServer;
-    newServer.turnOn();
+    newServer.turnOn(fileBytes);
+    //newClient.turnOn();
 
     cout << "Hello, World!" << endl;
     return 0;
