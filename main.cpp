@@ -38,13 +38,13 @@ int main() {
     string name = "pic.png";
     vector<unsigned char> fileBytes(readFile(name));
     //pasteDemo("pic2.png", fileBytes);
-    //client newClient;
+    // client newClient;
 
     int vecSize = fileBytes.size();
 
     server newServer;
     newServer.turnOn(fileBytes);
-    //newClient.turnOn();
+    // newClient.turnOn();
 
     cout << "Hello, World!" << endl;
     return 0;

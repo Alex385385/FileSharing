@@ -10,6 +10,7 @@
 #include <string.h>
 #include <iostream>
 #include <vector>
+#include <pthread.h>
 
 #include "server.h"
 
@@ -19,6 +20,11 @@
 
 server::server() = default;
 server::~server() = default;
+
+void ClientHandler(){
+    
+}
+
 
 void server::turnOn(const std::vector<unsigned char> &fileBytes) {
     int createdServer;
@@ -56,6 +62,10 @@ void server::turnOn(const std::vector<unsigned char> &fileBytes) {
     while(1) {
         std::cout << "Waiting for new connection" << std::endl;
         newSocket = accept(createdServer, (struct sockaddr *)&address, (socklen_t*)&addrlen);
+        
+        //call the client handler class
+        //client handler class will create another thread to handle incoming conenctions
+
 
         if(newSocket < 0) {
             std::cout << "Error" << std::endl;
@@ -69,7 +79,10 @@ void server::turnOn(const std::vector<unsigned char> &fileBytes) {
         int fileSize = fileBytes.size();
         int temp = htonl(fileSize);
 
+
+        //size of file
         write(newSocket, (const char*)&temp, sizeof(temp));
+        //sending actual file
         write(newSocket, fileBytes.data(), fileBytes.size());
 
         std::cout << "Message sent" << std::endl;
