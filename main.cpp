@@ -35,10 +35,12 @@ void pasteDemo(const string& name, const vector<unsigned char>& fileBytes) {
 }
 
 int main() {
-    string name = "hello.txt";
+    string name = "pic.png";
     vector<unsigned char> fileBytes(readFile(name));
-    //pasteDemo(name, fileBytes);
+    //pasteDemo("pic2.png", fileBytes);
     //client newClient;
+
+    int vecSize = fileBytes.size();
 
     server newServer;
     newServer.turnOn(fileBytes);

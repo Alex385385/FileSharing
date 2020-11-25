@@ -65,7 +65,13 @@ void server::turnOn(const std::vector<unsigned char> &fileBytes) {
         char buffer[30000] = {0};
         value = read(newSocket, buffer, 30000);
         printf("%s\n",buffer);
+
+        int fileSize = fileBytes.size();
+        int temp = htonl(fileSize);
+
+        write(newSocket, (const char*)&temp, sizeof(temp));
         write(newSocket, fileBytes.data(), fileBytes.size());
+
         std::cout << "Message sent" << std::endl;
 
         close(newSocket);
