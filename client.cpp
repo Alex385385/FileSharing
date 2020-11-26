@@ -9,6 +9,10 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <iostream>
+#include <fstream>
+//#include <string>
+#include <algorithm>
+#include <vector>
 
 #include "client.h"
 
@@ -17,9 +21,20 @@
 client::client() = default;
 client::~client() = default;
 
+void pasteDemo(const std::string& name, const std::vector<unsigned char>& fileBytes) {
+    std::ofstream output( name, std::ios::binary);
+
+    for(unsigned char fileByte : fileBytes) {
+        output.put(fileByte);
+    }
+
+    output.close();
+}
+
 void client::turnOn() {
     int clientSocket = 0;
     long value;
+    long value2;
     struct  sockaddr_in serverAddress;
     char *hello = "Hello from client";
     char buffer[1024] = {0};
@@ -48,7 +63,18 @@ void client::turnOn() {
 
     send(clientSocket, hello, strlen(hello), 0 );
     std::cout << "Hello message sent" << std::endl;
-    value = read(clientSocket , buffer, 1024);
-    printf("%s\n",buffer );
+    int fileSize;
+    int fileSizeConverted;
+
+    value2 = read(clientSocket, &fileSize, 4);
+    fileSizeConverted = ntohl(fileSize);
+
+    std::vector<unsigned char> buf(fileSizeConverted);
+
+    value = read(clientSocket , &buf[0], fileSizeConverted);
+
+    close(clientSocket);
+
+    pasteDemo("pic.png", buf);
     return;
 }
