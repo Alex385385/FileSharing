@@ -21,7 +21,7 @@
 client::client() = default;
 client::~client() = default;
 
-void pasteDemo(const std::string& name, const std::vector<unsigned char>& fileBytes) {
+void client::pasteDemo(const std::string& name, const std::vector<unsigned char>& fileBytes) {
     std::ofstream output( name, std::ios::binary);
 
     for(unsigned char fileByte : fileBytes) {

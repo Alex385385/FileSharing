@@ -13,6 +13,8 @@ public:
     virtual ~client();
 
     void turnOn();
+
+    void pasteDemo(const std::string& name, const std::vector<unsigned char>& fileBytes);
 };
 
 
