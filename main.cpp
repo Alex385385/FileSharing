@@ -6,6 +6,7 @@
 
 #include "server.h"
 #include "client.h"
+#include "login.h"
 
 using namespace std;
 
@@ -40,11 +41,15 @@ int main() {
     //pasteDemo("pic2.png", fileBytes);
     // client newClient;
 
-    int vecSize = fileBytes.size();
+    //int vecSize = fileBytes.size();
 
     server newServer;
     newServer.turnOn(fileBytes);
     // newClient.turnOn();
+
+    //login log;
+    //log.loginToAccount("al", "1234");
+    //log.createAccount("aldio", "1236");
 
     cout << "Hello, World!" << endl;
     return 0;
