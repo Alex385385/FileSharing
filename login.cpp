@@ -49,10 +49,12 @@ void login::createAccount(const std::string& username, const std::string& passwo
     if(openDB != 0) {
         std::cerr << "Error Username Exists" << std::endl;
         sqlite3_free(errorMsg);
+        return;
     }
+    std::cout << "Account created" << std::endl;
 }
 
-void login::loginToAccount(const std::string& username, const std::string& password) {
+bool login::loginToAccount(const std::string& username, const std::string& password) {
     std::string sql = "SELECT * FROM Login AS L WHERE L.Username = '" + username + "' AND L.Password = '" + password + "';";
 
     char *errorMsg = 0;
@@ -61,7 +63,9 @@ void login::loginToAccount(const std::string& username, const std::string& passw
     openDB = sqlite3_exec(DB, sql.c_str(), callback, (void*)data.c_str(), &errorMsg);
 
     if(!accountExists) {
-        std::cerr << "Error No Account Exists" << std::endl;
+        std::cout << "Error No Account Exists" << std::endl;
+        return false;
     }
     sqlite3_close(DB);
+    return true;
 }

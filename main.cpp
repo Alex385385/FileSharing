@@ -35,6 +35,81 @@ void pasteDemo(const string& name, const vector<unsigned char>& fileBytes) {
     output.close();
 }
 
+void menu() {
+    login loginToDB;
+    int input;
+    bool in = false;
+
+    string username;
+    string password;
+    string fileName;
+
+    cout << "Welcome to File Sharing" << endl;
+
+    do {
+        cout << "1) Login" << endl;
+        cout << "2) Create Account" << endl;
+        cin >> input;
+
+        while(!cin) {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "1) Login" << endl;
+            cout << "2) Create Account" << endl;
+            cin >> input;
+        }
+
+        if(input == 1) {
+            cout << "Username: ";
+            cin >> username;
+            cout << endl;
+
+            cout << "Password: ";
+            cin >> password;
+            cout << endl;
+
+            in = loginToDB.loginToAccount(username, password);
+        } else if(input == 2) {
+            cout << "Enter Username: ";
+            cin >> username;
+            cout << endl;
+
+            cout << "Enter Password: ";
+            cin >> password;
+            cout << endl;
+
+            loginToDB.createAccount(username, password);
+        }
+    } while (!in);
+
+    cout << "1) Send File" << endl;
+    cout << "2) Recieve File" << endl;
+    cin >> input;
+
+    while(!cin) {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "1) Send File" << endl;
+        cout << "2) Recieve File" << endl;
+        cin >> input;
+    }
+
+    if(input == 1) {
+        server newServer;
+        cout << "Type file name to send: ";
+        cin >> fileName;
+        cout << endl;
+
+        vector<unsigned char> fileBytes(readFile(fileName));
+        newServer.turnOn(fileBytes);
+
+    } else if(input == 2) {
+        client newClient;
+        newClient.turnOn();
+    }
+
+}
+
 int main() {
     string name = "pic.png";
     vector<unsigned char> fileBytes(readFile(name));

@@ -22,7 +22,7 @@ public:
 
     void createAccount(const std::string& username, const std::string& password);
 
-    void loginToAccount(const std::string& username, const std::string& password);
+    bool loginToAccount(const std::string& username, const std::string& password);
 
 };
 
