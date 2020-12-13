@@ -24,6 +24,7 @@ login::~login() = default;
 int login::callback(void *NotUsed, int argc, char **argv, char **azColName){
     if(argc == 2) {
         accountExists = true;
+        return -1;
     }
     for(int i = 0; i < argc; i++) {
 

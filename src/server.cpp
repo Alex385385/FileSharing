@@ -38,10 +38,11 @@ void * socketThread(void *arg){
 
 }
 
-void server::turnOn(const std::vector<unsigned char> &fileBytes) {
+void server::turnOn(const std::vector<unsigned char> &fileBytes, std::string fileName) {
     int createdServer;
     int newSocket;
     long value;
+    const char *nameFile = fileName.c_str();
 
     struct sockaddr_in address;
     int addrlen = sizeof(address);
@@ -71,6 +72,7 @@ void server::turnOn(const std::vector<unsigned char> &fileBytes) {
 
     while(1) {
         std::cout << "Waiting for new connection" << std::endl;
+        std::cout << std::endl;
         newSocket = accept(createdServer, (struct sockaddr *)&address, (socklen_t*)&addrlen); // this accepts new incoming connections at createdServer socket
         
         //call the client handler class
@@ -82,9 +84,8 @@ void server::turnOn(const std::vector<unsigned char> &fileBytes) {
             exit(0);
         }
 
-        char buffer[30000] = {0};
-        value = read(newSocket, buffer, 30000);
-        printf("%s\n",buffer);
+
+        std::cout << std::endl;
 
         int fileSize = fileBytes.size();
         int temp = htonl(fileSize);
@@ -92,10 +93,15 @@ void server::turnOn(const std::vector<unsigned char> &fileBytes) {
 
         //size of file
         write(newSocket, (const char*)&temp, sizeof(temp));
+
         //sending actual file
         write(newSocket, fileBytes.data(), fileBytes.size());
 
-        std::cout << "Message sent" << std::endl;
+        //send file name
+        send(newSocket, nameFile, strlen(nameFile), 0 );
+
+        std::cout << "File sent" << std::endl;
+        std::cout << std::endl;
 
         close(newSocket);
     }

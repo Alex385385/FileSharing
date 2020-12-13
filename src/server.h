@@ -13,7 +13,7 @@ public:
 
     virtual ~server();
 
-    void turnOn(const std::vector<unsigned char> &fileBytes);
+    void turnOn(const std::vector<unsigned char> &fileBytes, std::string fileName);
 
 };
 

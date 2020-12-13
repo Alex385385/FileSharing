@@ -83,14 +83,14 @@ void menu() {
     } while (!in);
 
     cout << "1) Send File" << endl;
-    cout << "2) Recieve File" << endl;
+    cout << "2) Receive File" << endl;
     cin >> input;
 
     while(!cin) {
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << "1) Send File" << endl;
-        cout << "2) Recieve File" << endl;
+        cout << "2) Receive File" << endl;
         cin >> input;
     }
 
@@ -101,7 +101,7 @@ void menu() {
         cout << endl;
 
         vector<unsigned char> fileBytes(readFile(fileName));
-        newServer.turnOn(fileBytes);
+        newServer.turnOn(fileBytes, fileName);
 
     } else if(input == 2) {
         client newClient;
@@ -111,21 +111,8 @@ void menu() {
 }
 
 int main() {
-    string name = "pic.png";
-    vector<unsigned char> fileBytes(readFile(name));
-    //pasteDemo("pic2.png", fileBytes);
-    // client newClient;
 
-    //int vecSize = fileBytes.size();
+    menu();
 
-    server newServer;
-    newServer.turnOn(fileBytes);
-    // newClient.turnOn();
-
-    //login log;
-    //log.loginToAccount("al", "1234");
-    //log.createAccount("aldio", "1236");
-
-    cout << "Hello, World!" << endl;
     return 0;
 }

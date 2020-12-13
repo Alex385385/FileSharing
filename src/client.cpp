@@ -38,6 +38,7 @@ void client::turnOn() {
     struct  sockaddr_in serverAddress;
     char *hello = "Hello from client";
     char buffer[1024] = {0};
+    std::string fileName;
 
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -61,20 +62,25 @@ void client::turnOn() {
         exit(0);
     }
 
-    send(clientSocket, hello, strlen(hello), 0 );
-    std::cout << "Hello message sent" << std::endl;
     int fileSize;
     int fileSizeConverted;
 
+    //read file size
     value2 = read(clientSocket, &fileSize, 4);
     fileSizeConverted = ntohl(fileSize);
 
     std::vector<unsigned char> buf(fileSizeConverted);
 
+    //get file
     value = read(clientSocket , &buf[0], fileSizeConverted);
+
+    //read file name
+    char buffer2[1024] = {0};
+    value = read(clientSocket, buffer2, 1024);
+    printf("%s\n",buffer2);
+    std::string str(buffer2);
 
     close(clientSocket);
 
-    pasteDemo("pic.png", buf);
-    return;
+    pasteDemo(str, buf);
 }
